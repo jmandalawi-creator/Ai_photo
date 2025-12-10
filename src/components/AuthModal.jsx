@@ -16,9 +16,6 @@ export default function AuthModal({ open, onClose, onSuccess }) {
 
   if (!open) return null;
 
-  // ------------------------------
-  // ✅ LOGIN
-  // ------------------------------
   const handleLogin = async () => {
     setLoading(true);
     setMessage("");
@@ -62,9 +59,6 @@ export default function AuthModal({ open, onClose, onSuccess }) {
     }
   };
 
-  // ------------------------------
-  // ✅ SIGN UP
-  // ------------------------------
   const handleSignup = async () => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
@@ -112,9 +106,6 @@ export default function AuthModal({ open, onClose, onSuccess }) {
     }
   };
 
-  // ------------------------------
-  // ✅ ORIGINAL UI (UNCHANGED)
-  // ------------------------------
   return (
     <div className="auth-overlay">
       <div className="auth-card animate-scaleIn">

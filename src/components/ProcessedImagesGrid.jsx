@@ -1,4 +1,3 @@
-// src/components/ProcessedImagesGrid.jsx
 import React from "react";
 import ProcessedImageCard from "./ProcessedImageCard";
 import { Image as ImageIcon } from "lucide-react";

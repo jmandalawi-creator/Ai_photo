@@ -1,4 +1,3 @@
-// src/pages/ImageEnhancement.jsx
 import React, { useState } from "react";
 import Header from "../components/Header";
 import ImageUploadZone from "../components/ImageUploadZone";
@@ -10,7 +9,6 @@ import "../styles/app.css";
 export default function ImageEnhancement() {
   const [processedImages, setProcessedImages] = useState([]);
 
-  // onUploadComplete will be called by upload zone to set loader cards and then update them
   const handleUploadComplete = (images = []) => {
     setProcessedImages(images);
   };
@@ -19,7 +17,6 @@ export default function ImageEnhancement() {
     <div className="page-wrap">
       <Header />
 
-      {/* hero + upload */}
       <section className="hero-section">
         <div className="hero-container">
           <div className="hero-text">
@@ -34,7 +31,6 @@ export default function ImageEnhancement() {
         </div>
       </section>
 
-      {/* Enhanced Images section (single place) */}
       <section className="enhanced-section">
         <div className="enhanced-container">
           <div className="enhanced-heading">

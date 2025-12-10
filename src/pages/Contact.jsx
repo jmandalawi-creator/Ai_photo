@@ -20,7 +20,6 @@ export default function Contact() {
         </div>
 
         <div className="contact-grid">
-          {/* Contact Form */}
           <div className="contact-form-card">
             <h2 className="form-title">Send us a message</h2>
             <form className="contact-form">
@@ -32,7 +31,6 @@ export default function Contact() {
             </form>
           </div>
 
-          {/* Contact Info */}
           <div className="contact-info-card">
             <h2 className="form-title">Contact Information</h2>
             <div className="contact-info-items">

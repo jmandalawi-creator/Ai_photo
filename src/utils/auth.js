@@ -1,16 +1,15 @@
 export function setToken(token) {
   localStorage.setItem("token", token);
-  window.dispatchEvent(new Event("auth-change")); // ✅ updates header instantly
+  window.dispatchEvent(new Event("auth-change")); 
 }
 
 export function removeToken() {
   localStorage.removeItem("token");
   localStorage.removeItem("user_id");
   localStorage.removeItem("user_email");
-  window.dispatchEvent(new Event("auth-change")); // ✅ updates header instantly
+  window.dispatchEvent(new Event("auth-change")); 
 }
 
-// ✅ Alias so Header.jsx works without changes
 export const logout = removeToken;
 
 export function getToken() {

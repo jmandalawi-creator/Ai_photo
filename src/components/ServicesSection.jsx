@@ -49,7 +49,7 @@ export default function ServicesSection() {
   const navigate = useNavigate();
 
   const handleServiceClick = (servicePage) => {
-    navigate(servicePage); // Always redirect to service page
+    navigate(servicePage); 
   };
 
   return (

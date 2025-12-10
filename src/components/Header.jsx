@@ -5,11 +5,10 @@ import { isLoggedIn, logout } from "../utils/auth";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(isLoggedIn()); // ✅ REAL-TIME LOGIN STATE
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn()); 
   const dropdownRef = useRef();
   const navigate = useNavigate();
 
-  // ✅ AUTO-SYNC LOGIN STATE (NO REFRESH NEEDED)
   useEffect(() => {
     const syncAuth = () => setLoggedIn(isLoggedIn());
     window.addEventListener("auth-change", syncAuth);
@@ -87,7 +86,6 @@ export default function Header() {
           </nav>
 
           <div className="header-actions">
-            {/* ✅ LIVE LOGIN UI FIX */}
             {loggedIn ? (
               <>
                 <button
@@ -100,8 +98,8 @@ export default function Header() {
                 <button
                   className="contact-btn"
                   onClick={() => {
-                    logout();                         // ✅ clears storage
-                    window.dispatchEvent(new Event("auth-change")); // ✅ sync header instantly
+                    logout();                      
+                    window.dispatchEvent(new Event("auth-change")); 
                     navigate("/");
                   }}
                 >

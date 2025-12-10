@@ -41,9 +41,6 @@ export default function Auth() {
     setIsLoading(true);
 
     try {
-      // ==========================
-      // LOGIN
-      // ==========================
       if (isLogin) {
         const res = await fetch("http://localhost:8000/auth/login", {
           method: "POST",
@@ -63,7 +60,6 @@ export default function Auth() {
         const token = data.session?.access_token;
         const user = data.session?.user || {};
 
-        // FIXED: correct storage for user ID + email + name
         localStorage.setItem("token", token);
         localStorage.setItem("user_id", user.id || "");
         localStorage.setItem("user_email", user.email || "");
@@ -74,9 +70,6 @@ export default function Auth() {
         return;
       }
 
-      // ==========================
-      // SIGNUP
-      // ==========================
       if (password !== confirmPassword) {
         showAlert("Passwords do not match.", "error");
         setIsLoading(false);

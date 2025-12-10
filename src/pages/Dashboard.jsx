@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";   // ✅ ADD HEADER
+import Header from "../components/Header"; 
 import "../styles/app.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -31,7 +31,6 @@ export default function Dashboard() {
     fetchCredits();
   }, []);
 
-  // ✅ FETCH USER INFO
   const fetchUserInfo = async () => {
     try {
       const res = await fetch(`${API_URL}/auth/user/${user_id}`);
@@ -43,7 +42,6 @@ export default function Dashboard() {
     }
   };
 
-  // ✅ FETCH CREDITS
   const fetchCredits = async () => {
     try {
       const res = await fetch(`${API_URL}/payments/credits?user_id=${user_id}`);
@@ -56,7 +54,6 @@ export default function Dashboard() {
     }
   };
 
-  // ✅ UPDATE FULL NAME
   const handleNameUpdate = async () => {
     try {
       setSaving(true);
@@ -79,7 +76,6 @@ export default function Dashboard() {
     }
   };
 
-  // ✅ UPDATE PASSWORD
   const handlePasswordUpdate = async () => {
     try {
       if (!newPassword) return alert("Enter a password");
@@ -115,14 +111,12 @@ export default function Dashboard() {
 
   return (
     <>
-      {/* ✅ HEADER NOW INCLUDED */}
       <Header />
 
       <div className="dashboard-wrapper">
         <h1 className="dashboard-title">Account Overview</h1>
 
         <div className="dashboard-grid">
-          {/* LEFT COLUMN */}
           <div className="dashboard-left">
             <div className="dashboard-card">
               <h3 className="card-title">Profile</h3>
@@ -142,7 +136,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* RIGHT COLUMN */}
           <div className="dashboard-right">
             <div className="dashboard-card">
               <h3 className="card-title">Update Full Name</h3>

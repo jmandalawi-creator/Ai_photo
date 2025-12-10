@@ -8,7 +8,6 @@ export default function PaymentSuccess() {
   useEffect(() => {
     const lastService = localStorage.getItem("last_service") || "/ImageEnhancement";
 
-    // Simulate professional redirect delay
     const timer = setTimeout(() => {
       navigate(lastService, { replace: true });
     }, 2500);

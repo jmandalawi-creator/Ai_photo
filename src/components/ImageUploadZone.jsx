@@ -1,4 +1,3 @@
-// src/components/ImageUploadZone.jsx
 import React, { useState, useRef } from "react";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -15,7 +14,6 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ✅ CREDIT COST PER SERVICE
 const CREDIT_COST = {
   ImageEnhancement: 5,
   LogoAdd: 3,
@@ -39,9 +37,6 @@ export default function ImageUploadZone({ onUploadComplete }) {
   const webhookUrl =
     "https://c3d.app.n8n.cloud/webhook/7f38b752-28b9-4675-81af-f182dd5eb743";
 
-  // ===============================
-  // FILE ADD (LOGIN REQUIRED)
-  // ===============================
   const addFiles = async (fileList) => {
     if (!isLoggedIn()) {
       tempFilesRef.current = Array.from(fileList);
@@ -88,9 +83,6 @@ export default function ImageUploadZone({ onUploadComplete }) {
   const removeFile = (id) =>
     setSelectedFiles((prev) => prev.filter((f) => f.id !== id));
 
-  // ===============================
-  // MAIN PROCESS CLICK (CREDITS CHECK)
-  // ===============================
   const onProcessClick = async () => {
     if (!isLoggedIn()) {
       setShowAuth(true);
@@ -117,9 +109,6 @@ export default function ImageUploadZone({ onUploadComplete }) {
     startProcess(creditsPerImage);
   };
 
-  // ===============================
-  // PROCESS FILES
-  // ===============================
   const startProcess = async (creditsPerImage) => {
     processingRef.current = [...selectedFiles];
 
@@ -137,7 +126,6 @@ export default function ImageUploadZone({ onUploadComplete }) {
       const s = processingRef.current[idx];
 
       try {
-        // ✅ SAFE FILENAME (CRITICAL FIX)
         const safeFileName = s.fileName
           .replace(/\s+/g, "_")
           .replace(/[()]/g, "")
@@ -145,7 +133,6 @@ export default function ImageUploadZone({ onUploadComplete }) {
 
         const uniqueName = `uploads/${Date.now()}-${safeFileName}`;
 
-        // ✅ SAFE UPLOAD
         const { error: uploadError } = await supabase.storage
           .from("AI_Photo_studio_uploaded_Images")
           .upload(uniqueName, s.file, {
@@ -161,7 +148,6 @@ export default function ImageUploadZone({ onUploadComplete }) {
           continue;
         }
 
-        // ✅ PUBLIC URL
         const { data: publicData } = supabase.storage
           .from("AI_Photo_studio_uploaded_Images")
           .getPublicUrl(uniqueName);
@@ -174,7 +160,6 @@ export default function ImageUploadZone({ onUploadComplete }) {
           continue;
         }
 
-        // ✅ WEBHOOK
         const response = await fetch(webhookUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -206,7 +191,6 @@ export default function ImageUploadZone({ onUploadComplete }) {
         imagesToProcess[idx].status = "completed";
         onUploadComplete([...imagesToProcess]);
 
-        // ✅ DEDUCT CREDITS
         const userId = localStorage.getItem("user_id");
         await spendCredits(userId, creditsPerImage);
       } catch (err) {
@@ -220,9 +204,6 @@ export default function ImageUploadZone({ onUploadComplete }) {
     toast.success("Processing finished");
   };
 
-  // ===============================
-  // RENDER
-  // ===============================
   return (
     <div className="upload-zone-container">
       <AuthModal

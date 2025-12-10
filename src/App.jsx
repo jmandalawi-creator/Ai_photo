@@ -12,12 +12,11 @@ import Dashboard from "./pages/Dashboard";
 import BuyCredits from "./pages/BuyCredits";
 import PaymentSuccess from "./pages/PaymentSuccess";
 
-import AuthModal from "./components/AuthModal";   // ✅ IMPORTANT
+import AuthModal from "./components/AuthModal"; 
 
 export default function App() {
   const [showAuth, setShowAuth] = useState(false);
 
-  // ✅ GLOBAL LOGIN MODAL LISTENER
   useEffect(() => {
     const handler = (e) => {
       setShowAuth(true);
@@ -44,7 +43,6 @@ export default function App() {
   return (
     <Router>
 
-      {/* ✅ LOGIN MODAL AVAILABLE EVERYWHERE */}
       <AuthModal
         open={showAuth}
         onClose={() => setShowAuth(false)}
