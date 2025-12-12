@@ -2656,3 +2656,173 @@
   from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Logo Add Page */
+
+/* Page spacing */
+.logo-add-section {
+  padding: 80px 0;
+  background: #fafafa;
+}
+
+/* Centered wrapper */
+.content-wrapper {
+  max-width: 40%;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* Header text */
+.main-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.description {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: -6px;
+}
+
+.input-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+
+
+.logo-form {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.input-field {
+  width: 90%;
+  padding: 15px 18px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fafafa;
+  transition: all 0.25s ease;
+}
+
+.input-field:focus {
+  border-color: #6a11cb;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.12);
+  outline: none;
+}
+
+/* Submit Button */
+.primary-btn {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: #fff;
+  padding: 16px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(37, 117, 252, 0.25);
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===============================
+       VIDEO PREVIEW SECTION
+   =============================== */
+
+.processed-section {
+  margin-top: 50px;
+  padding: 30px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  animation: scaleIn 0.35s ease;
+}
+
+.processed-section h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #222;
+}
+
+.processed-video {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid #e5e5e5;
+  background: #000;
+}
+
+/* ===============================
+          ANIMATIONS
+   =============================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+
