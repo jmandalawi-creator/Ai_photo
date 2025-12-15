@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import "../styles/app.css";
+import { getToken } from "../utils/auth";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const user_id = localStorage.getItem("user_id");
+  const token = getToken();
 
   const [user, setUser] = useState({
     full_name: "",
@@ -22,7 +24,7 @@ export default function Dashboard() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!user_id) {
+    if (!user_id || !token) {
       navigate("/");
       return;
     }
@@ -31,16 +33,18 @@ export default function Dashboard() {
     fetchCredits();
   }, []);
 
-  // ----------------------------------------
-  // 🔍 FETCH USER INFO (SAFE)
-  // ----------------------------------------
+  const authHeaders = {
+    Authorization: `Bearer ${token}`,
+  };
+
   const fetchUserInfo = async () => {
     try {
-      const res = await fetch(`${API_URL}/auth/user/${user_id}`);
+      const res = await fetch(`${API_URL}/auth/user/${user_id}`, {
+        headers: authHeaders,
+      });
 
       if (!res.ok) {
         const text = await res.text();
-        console.error("❌ User info API error:", res.status, text);
         throw new Error(text);
       }
 
@@ -52,16 +56,15 @@ export default function Dashboard() {
     }
   };
 
-  // ----------------------------------------
-  // 🔍 FETCH CREDITS (SAFE)
-  // ----------------------------------------
   const fetchCredits = async () => {
     try {
-      const res = await fetch(`${API_URL}/payments/credits?user_id=${user_id}`);
+      const res = await fetch(
+        `${API_URL}/payments/credits?user_id=${user_id}`,
+        { headers: authHeaders }
+      );
 
       if (!res.ok) {
         const text = await res.text();
-        console.error("❌ Credits API error:", res.status, text);
         throw new Error(text);
       }
 
@@ -74,16 +77,16 @@ export default function Dashboard() {
     }
   };
 
-  // ----------------------------------------
-  // ✏️ UPDATE NAME
-  // ----------------------------------------
   const handleNameUpdate = async () => {
     try {
       setSaving(true);
 
       const res = await fetch(`${API_URL}/auth/update-name`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...authHeaders,
+        },
         body: JSON.stringify({
           user_id,
           full_name: newName,
@@ -92,22 +95,19 @@ export default function Dashboard() {
 
       if (!res.ok) {
         const text = await res.text();
-        console.error("❌ Update name error:", res.status, text);
         throw new Error(text);
       }
 
       setUser((prev) => ({ ...prev, full_name: newName }));
       alert("Name updated successfully");
     } catch (err) {
+      console.error(err);
       alert("Failed to update name");
     } finally {
       setSaving(false);
     }
   };
 
-  // ----------------------------------------
-  // 🔒 UPDATE PASSWORD
-  // ----------------------------------------
   const handlePasswordUpdate = async () => {
     try {
       if (!newPassword) return alert("Enter a password");
@@ -116,7 +116,10 @@ export default function Dashboard() {
 
       const res = await fetch(`${API_URL}/auth/change-password`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...authHeaders,
+        },
         body: JSON.stringify({
           user_id,
           new_password: newPassword,
@@ -125,22 +128,19 @@ export default function Dashboard() {
 
       if (!res.ok) {
         const text = await res.text();
-        console.error("❌ Update password error:", res.status, text);
         throw new Error(text);
       }
 
       setNewPassword("");
       alert("Password updated successfully");
     } catch (err) {
+      console.error(err);
       alert("Failed to update password");
     } finally {
       setSaving(false);
     }
   };
 
-  // ----------------------------------------
-  // ⏳ LOADING STATE
-  // ----------------------------------------
   if (loading) {
     return (
       <>
@@ -150,9 +150,6 @@ export default function Dashboard() {
     );
   }
 
-  // ----------------------------------------
-  // ✅ DASHBOARD UI
-  // ----------------------------------------
   return (
     <>
       <Header />
