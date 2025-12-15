@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://ai-image-api-78060973422.us-central1.run.app/:path*"
+    }
+  ]
+}
