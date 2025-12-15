@@ -8,7 +8,7 @@ export default function CreditsModal({ open, onClose }) {
 
   if (!open) return null;
 
-  return (
+  return (  
     <div className="credits-overlay">
       <div className="credits-modal">
         
