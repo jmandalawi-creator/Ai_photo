@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header"; 
+import Header from "../components/Header";
 import "../styles/app.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -31,9 +31,19 @@ export default function Dashboard() {
     fetchCredits();
   }, []);
 
+  // ----------------------------------------
+  // 🔍 FETCH USER INFO (SAFE)
+  // ----------------------------------------
   const fetchUserInfo = async () => {
     try {
       const res = await fetch(`${API_URL}/auth/user/${user_id}`);
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("❌ User info API error:", res.status, text);
+        throw new Error(text);
+      }
+
       const data = await res.json();
       setUser(data);
       setNewName(data.full_name || "");
@@ -42,9 +52,19 @@ export default function Dashboard() {
     }
   };
 
+  // ----------------------------------------
+  // 🔍 FETCH CREDITS (SAFE)
+  // ----------------------------------------
   const fetchCredits = async () => {
     try {
       const res = await fetch(`${API_URL}/payments/credits?user_id=${user_id}`);
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("❌ Credits API error:", res.status, text);
+        throw new Error(text);
+      }
+
       const data = await res.json();
       setCredits(data.credits || 0);
     } catch (err) {
@@ -54,11 +74,14 @@ export default function Dashboard() {
     }
   };
 
+  // ----------------------------------------
+  // ✏️ UPDATE NAME
+  // ----------------------------------------
   const handleNameUpdate = async () => {
     try {
       setSaving(true);
 
-      await fetch(`${API_URL}/auth/update-name`, {
+      const res = await fetch(`${API_URL}/auth/update-name`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -66,6 +89,12 @@ export default function Dashboard() {
           full_name: newName,
         }),
       });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("❌ Update name error:", res.status, text);
+        throw new Error(text);
+      }
 
       setUser((prev) => ({ ...prev, full_name: newName }));
       alert("Name updated successfully");
@@ -76,13 +105,16 @@ export default function Dashboard() {
     }
   };
 
+  // ----------------------------------------
+  // 🔒 UPDATE PASSWORD
+  // ----------------------------------------
   const handlePasswordUpdate = async () => {
     try {
       if (!newPassword) return alert("Enter a password");
 
       setSaving(true);
 
-      await fetch(`${API_URL}/auth/change-password`, {
+      const res = await fetch(`${API_URL}/auth/change-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -90,6 +122,12 @@ export default function Dashboard() {
           new_password: newPassword,
         }),
       });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("❌ Update password error:", res.status, text);
+        throw new Error(text);
+      }
 
       setNewPassword("");
       alert("Password updated successfully");
@@ -100,6 +138,9 @@ export default function Dashboard() {
     }
   };
 
+  // ----------------------------------------
+  // ⏳ LOADING STATE
+  // ----------------------------------------
   if (loading) {
     return (
       <>
@@ -109,6 +150,9 @@ export default function Dashboard() {
     );
   }
 
+  // ----------------------------------------
+  // ✅ DASHBOARD UI
+  // ----------------------------------------
   return (
     <>
       <Header />
